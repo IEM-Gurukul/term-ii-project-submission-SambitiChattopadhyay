@@ -12,4 +12,8 @@ public class Student {
     this.age = age;
     this.department = department;
 }
+    public int getId() {
+    return id;
+
+}
 }
