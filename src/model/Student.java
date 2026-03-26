@@ -16,4 +16,7 @@ public class Student {
     return id;
 
 }
+public void display() {
+    System.out.println(id + " | " + name + " | " + age + " | " + department);
+}
 }
