@@ -31,7 +31,12 @@ class Main {
     +main(String[] args)
 }
 
+class ExceptionHandling {
+    +handleInputMismatch()
+}
+
 StudentService <|.. StudentManager
 StudentManager --> Student
-Main --> StudentManager
+Main --> StudentService
 Main --> Student
+Main --> ExceptionHandling
