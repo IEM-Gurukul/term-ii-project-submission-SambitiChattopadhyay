@@ -4,6 +4,7 @@ import service.StudentManager;
 import service.StudentService;
 import model.Student;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -13,50 +14,82 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         StudentService manager = new StudentManager();
 
-        while(true){
+        while (true) {
 
-            System.out.println("1. Add");
-            System.out.println("2. View");
-            System.out.println("3. Search");
-            System.out.println("4. Delete");
+            System.out.println("\n===== Student Management System =====");
+            System.out.println("1. Add Student");
+            System.out.println("2. View Students");
+            System.out.println("3. Search Student");
+            System.out.println("4. Delete Student");
             System.out.println("5. Exit");
 
-            int choice = sc.nextInt();
+            try {
+                System.out.print("Enter choice: ");
+                int choice = sc.nextInt();
 
-            switch(choice){
+                switch (choice) {
 
-                case 1:
-                    System.out.print("ID: ");
-                    int id = sc.nextInt();
-                    sc.nextLine();
+                    case 1:
+                        try {
+                            System.out.print("Enter ID: ");
+                            int id = sc.nextInt();
+                            sc.nextLine();
 
-                    System.out.print("Name: ");
-                    String name = sc.nextLine();
+                            System.out.print("Enter Name: ");
+                            String name = sc.nextLine();
 
-                    System.out.print("Age: ");
-                    int age = sc.nextInt();
-                    sc.nextLine();
+                            System.out.print("Enter Age: ");
+                            int age = sc.nextInt();
+                            sc.nextLine();
 
-                    System.out.print("Dept: ");
-                    String dept = sc.nextLine();
+                            System.out.print("Enter Department: ");
+                            String dept = sc.nextLine();
 
-                    manager.addStudent(new Student(id,name,age,dept));
-                    break;
+                            manager.addStudent(new Student(id, name, age, dept));
 
-                case 2:
-                    manager.viewStudents();
-                    break;
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid input. ID and Age must be numbers.");
+                            sc.nextLine(); // clear buffer
+                        }
+                        break;
 
-                case 3:
-                    manager.searchStudent(sc.nextInt());
-                    break;
+                    case 2:
+                        manager.viewStudents();
+                        break;
 
-                case 4:
-                    manager.deleteStudent(sc.nextInt());
-                    break;
+                    case 3:
+                        try {
+                            System.out.print("Enter ID to search: ");
+                            int sid = sc.nextInt();
+                            manager.searchStudent(sid);
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid ID. Please enter a number.");
+                            sc.nextLine();
+                        }
+                        break;
 
-                case 5:
-                    System.exit(0);
+                    case 4:
+                        try {
+                            System.out.print("Enter ID to delete: ");
+                            int did = sc.nextInt();
+                            manager.deleteStudent(did);
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid ID. Please enter a number.");
+                            sc.nextLine();
+                        }
+                        break;
+
+                    case 5:
+                        System.out.println("Exiting...");
+                        System.exit(0);
+
+                    default:
+                        System.out.println("Invalid choice.");
+                }
+
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a valid numeric menu choice.");
+                sc.nextLine(); 
             }
         }
     }
